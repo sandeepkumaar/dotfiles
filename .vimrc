@@ -25,7 +25,7 @@ nnoremap p ]p
 xnoremap p pgvy
 ":C^r "to paste in command mode
 set showmatch 
-set hls
+set is hls "incremental-highlight search
 "let loaded_matchparen = 1 "disable highlight matchparenthesis
 
 " Finding files

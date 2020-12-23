@@ -1,15 +1,18 @@
  
-source ~/.vimrc.bundles
+
+"env
+set noeb vb t_vb= "no
+set novisualbell
 
 "file 
 set nowritebackup
 set noswapfile
 set nobackup
+set backspace=indent,eol,start
 
 "indent
 set number
-set tabstop=2
-set shiftwidth=2
+set tabstop=2 shiftwidth=2 expandtab
 set autoindent
 set smartindent
 set nowrap
@@ -18,12 +21,17 @@ set nowrap
 set clipboard=unnamedplus
 "paste-currentindent
 nnoremap p ]p 
-set noshowmatch "use % to find closing brackets 
-let loaded_matchparen = 1
+"paste multiple
+xnoremap p pgvy
+":C^r "to paste in command mode
+set showmatch 
+set hls
+"let loaded_matchparen = 1 "disable highlight matchparenthesis
 
 " Finding files
 set path+=**
 set wildmenu 
+set wildmode=full
 set wildignore+=**/node_modules/**
 
 " netrw config
@@ -32,12 +40,14 @@ let g:netrw_banner = 0
 ":E  open current directory 
 "d, D delete and create directory 
 "R rename
+"% create file
 
 
 "theme
 syntax on 
 set background=dark
 colorscheme pablo 
+set guifont=Consolas:h10
 
 " Window management
 " split panes vertically, Left be the main file. Right be the imported files

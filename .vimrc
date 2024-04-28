@@ -1,4 +1,5 @@
- 
+"Using Native package manager ~/.vim/pack/start/**
+"https://shapeshed.com/vim-packages/
 
 "env
 set noeb vb t_vb= "no
@@ -16,38 +17,43 @@ set tabstop=2 shiftwidth=2 expandtab
 set autoindent
 set smartindent
 set nowrap
+filetype plugin indent on
 
 "select-copy-paste
-set clipboard=unnamedplus
+set clipboard=unnamed
 "paste-currentindent
 nnoremap p ]p 
 "paste multiple
 xnoremap p pgvy
 ":C^r "to paste in command mode
 set showmatch 
-set is hls "incremental-highlight search
-"let loaded_matchparen = 1 "disable highlight matchparenthesis
-
-" Finding files
-set path+=**
-set wildmenu 
-set wildmode=full
-set wildignore+=**/node_modules/**
+set hls "incremental-highlight search
+set incsearch
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+let loaded_matchparen = 1 "disable highlight matchparenthesis
 
 " netrw config
-let g:netrw_liststyle= 3
+let g:netrw_liststyle= 0 
 let g:netrw_banner = 0
 ":E  open current directory 
 "d, D delete and create directory 
 "R rename
 "% create file
 
-
 "theme
 syntax on 
 set background=dark
-colorscheme pablo 
-set guifont=Consolas:h10
+colorscheme nord
+" Settings for pablo colorscheme
+"colorscheme pablo
+"set t_Co=256
+" **Make vim to take the terminal background**
+"highlight Normal ctermbg=NONE
+"highlight nonText ctermbg=NONE
+
+" ALE Linters
+
+
 
 " Window management
 " split panes vertically, Left be the main file. Right be the imported files
@@ -66,4 +72,3 @@ set guifont=Consolas:h10
 " ^x^f auto-complete path; ^n, ^p move suggestion 
 " ^n; ^x^n autocomplete word; within file
 " ^e to discard autocomplete
-" 

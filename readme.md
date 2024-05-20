@@ -1,6 +1,7 @@
 ## MAC Setup
 
-- brew install
+### brew & git
+Instal brew
 - brew install git (installs xcode)
 
 ### Shell
@@ -20,12 +21,20 @@ Plugins:
 - vim-prettier
 - vim-ale
 
+Install using Native plugin manager in the path
+```
+~/.vim/pack/plugins/start
+~/.vim/pack/plugins/opt
+```
+
 ### Nord theme
+https://github.com/nordtheme/terminal-app
 
 ### tmux
 brew install tmux
 
 ### node
+use nvm
 
 
 

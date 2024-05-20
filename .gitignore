@@ -1,0 +1,12 @@
+*
+!.gitignore
+!.bash_rc
+!.bash_profile
+!.zshrc
+!.vimrc
+!.tmux.conf
+!.eslintrc.cjs
+!.tsconfig
+!.vscode/*
+!terminal-settings.md
+

@@ -1,11 +1,13 @@
 "Using Native package manager ~/.vim/pack/start/**
 "https://shapeshed.com/vim-packages/
 
+
 "env
 set noeb vb t_vb= "no
 set novisualbell
 
-"file set nowritebackup
+"file 
+set nowritebackup
 set noswapfile
 set nobackup
 set backspace=indent,eol,start
@@ -19,7 +21,7 @@ set nowrap
 filetype plugin indent on
 
 "select-copy-paste
-set clipboard=unnamed
+set clipboard^=unnamed,unnamedplus
 "paste-currentindent
 nnoremap p ]p 
 "paste multiple
@@ -28,8 +30,15 @@ xnoremap p pgvy
 set showmatch 
 set hls "incremental-highlight search
 set incsearch
+"allows showmatch on visual selected text. after select do double slash //
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
-let loaded_matchparen = 1 "disable highlight matchparenthesis
+
+
+" Finding files
+set path+=**
+set wildmenu 
+set wildmode=full
+set wildignore+=**/node_modules/**
 
 " netrw config
 let g:netrw_liststyle= 0 
@@ -64,15 +73,20 @@ let g:ale_sign_column_always = 0
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \}
+"let g:ale_javascript_eslint_use_global = 1
 let g:ale_disable_lsp = 1
 """""""
 
 """"""" COC.vim
 packadd coc.nvim
 source ~/.vim/coc.vimrc
+"ctrl + k for function signature
+"highlight CocFloating ctermbg=lightgray ctermfg=darkgray guibg=#D3D3D3 guifg=#A9A9A9
+inoremap <silent> <C-k> <C-r>=CocActionAsync('showSignatureHelp')<CR>
 "coc-go options
+"import on save
 autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
-"""""""
+""""""""
 
 """"""" Window management
 " split panes vertically, Left be the main file. Right be the imported files

@@ -31,7 +31,11 @@ Install using Native plugin manager in the path
 https://github.com/nordtheme/terminal-app
 
 ### tmux
+```
 brew install tmux
+# to enable copy command
+brew install reattach-to-user-namespace
+```
 
 ### node
 use nvm

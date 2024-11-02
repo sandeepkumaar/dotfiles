@@ -30,6 +30,7 @@ Clone dotfiles under the root directory. copy all files to Root
 
 ### VIM
 - mac has vim by default. if you need latest version - use brew to install latest
+- brew install xclip #to enable clipboard copy  
 - copy `.vimrc` and `.vim` to root
 
 Install Plugins using vim native package manager
@@ -44,22 +45,8 @@ $ git clone https://github.com/dense-analysis/ale.git
 $ git clone https://github.com/neoclide/coc.nvim.git
 ```
 #### Coc-Settings  
-- copy coc.vimrc to .vim/
-- use vim command CocConfig to open the settings and paste the following
-```
-{
-  "diagnostic.displayByAle": true,
-  "suggest.autoTrigger": "none",
-  "suggest.enableFloat": false,
-  "suggest.noselect": true,
-  "signature.enable": false,
-  "signature.preferShownAbove": false,
-  "languageserver": {
-  }
-}
-```
-
-- brew install xclip #to enable clipboard copy  
+- `coc-settings.json` present in .vim will be used
+- refer `.config` to install extensions
 
 ### Nord theme
 https://github.com/nordtheme/terminal-app

@@ -1,0 +1,17 @@
+{
+
+  "diagnostic.displayByAle": true,
+  "[javascript]": {
+    "suggest.autoTrigger": "none",
+    "suggest.enableFloat": false,
+    "suggest.noselect": true,
+    "signature.enable": false,
+    "signature.preferShownAbove": false
+  },
+  
+
+  // languageserver options go here
+  "languageserver": {
+  }
+}
+

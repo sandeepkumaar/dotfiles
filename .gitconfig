@@ -3,3 +3,9 @@
 # Please adapt and uncomment the following lines:
   name = sandeepkumaar.c
 	email = cskumaar1992@gmail.com
+[init]
+	defaultBranch = main
+[alias]
+	logs = log --decorate --oneline --graph
+[pull]
+	rebase = false

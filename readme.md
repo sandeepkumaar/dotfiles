@@ -61,5 +61,11 @@ brew install reattach-to-user-namespace
 ### node
 use nvm and set path in bash_profile
 
+### vscode/windsurf
+Copy `./vscode-settings.json`
 
+
+## TODO
+- Replace Eslint + Prettier with Biome 
+- Keep a list of most used global npm packages, global package.json ? 
 

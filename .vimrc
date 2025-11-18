@@ -1,7 +1,6 @@
 "Using Native package manager ~/.vim/pack/start/**
 "https://shapeshed.com/vim-packages/
 
-
 "env
 set noeb vb t_vb= "no
 set novisualbell
@@ -12,12 +11,24 @@ set noswapfile
 set nobackup
 set backspace=indent,eol,start
 
+""""""" COC.vim
+packadd coc.nvim
+source ~/.vim/coc.vimrc
+"""""""
+packadd ale
+source ~/.vim/ale.vimrc
+
 "indent
 set number
-set tabstop=2 shiftwidth=2 expandtab
+set tabstop=2        " A tab character displays as 2 spaces
+set softtabstop=2    " Pressing <Tab> or <BS> adds/removes 2 spaces
+set shiftwidth=2     " Indentation with >> or << is 2 spaces
+set expandtab        " Replaces tabs with spaces
 set autoindent
 set smartindent
 set nowrap
+set foldmethod=syntax
+set foldlevel=1000
 filetype plugin indent on
 
 "select-copy-paste
@@ -30,9 +41,34 @@ xnoremap p pgvy
 set showmatch 
 set hls "incremental-highlight search
 set incsearch
+
+
 "allows showmatch on visual selected text. after select do double slash //
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
+"""""""""""""""""""""""""
+"To avoid overuse of left pinky
+""""""""""""""""""""""""
+" Set space as the leader key
+let mapleader = " "
+nnoremap <Space> <Nop>
+" switch tabs
+nnoremap <leader>ww <C-w>w
+" alternate buffer
+nnoremap <leader>- <C-^>
+" switch to terminal
+nnoremap <leader>z <C-z>
+" write file
+nnoremap <leader>w :w<CR>
+" quit file
+nnoremap <leader>q :q<CR>
+" Explorer
+nnoremap <leader>e :Ex<CR>
+" Split
+nnoremap <leader>vs :vs<CR>
+
+" Insert mode: Ctrl + s to save and return to normal mode
+inoremap <C-s> <Esc>:w<CR>
 
 " Finding files
 set path+=**
@@ -50,9 +86,6 @@ let g:netrw_banner = 0
 
 "theme
 syntax on 
-" Nord setting
-"set background=dark
-"colorscheme nord
 
 " Settings for pablo colorscheme
 colorscheme pablo
@@ -62,31 +95,11 @@ set background=dark
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
 
-""""""" ALE Linters
-packadd ale
-let g:ale_enabled = 1
-let g:ale_linters_explicit = 1
-let g:ale_virtualtext_cursor = 'disabled'
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
-let g:ale_sign_column_always = 0
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\}
-"let g:ale_javascript_eslint_use_global = 1
-let g:ale_disable_lsp = 1
-"""""""
+" Hack for vim freeze in mac for typescript files
+set re=2
 
-""""""" COC.vim
-packadd coc.nvim
-source ~/.vim/coc.vimrc
-"ctrl + k for function signature
-"highlight CocFloating ctermbg=lightgray ctermfg=darkgray guibg=#D3D3D3 guifg=#A9A9A9
-inoremap <silent> <C-k> <C-r>=CocActionAsync('showSignatureHelp')<CR>
-"coc-go options
-"import on save
-autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
-""""""""
+
+
 
 """"""" Window management
 " split panes vertically, Left be the main file. Right be the imported files

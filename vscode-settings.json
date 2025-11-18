@@ -1,0 +1,89 @@
+{
+  // Security
+  "security.workspace.trust.untrustedFiles": "open",
+
+  // Editor
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "editor.cursorStyle": "block",
+  "editor.fontFamily": "SF Mono", // 13
+  "editor.fontSize": 13,
+  "editor.fontWeight": "normal",
+  "editor.guides.bracketPairs": "active",
+  "editor.guides.bracketPairsHorizontal": false,
+  "editor.lineHeight": 1.6,
+  "editor.matchBrackets": "near",
+  "editor.minimap.enabled": false,
+  "editor.occurrencesHighlight": "off",
+  "editor.tabSize": 2,
+
+
+  // Git
+  "git.openRepositoryInParentFolders": "never",
+
+  // Terminal
+  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.lineHeight": 1.25,
+
+  // Vim
+  "vim.hlsearch": true,
+  "vim.leader": "<space>",
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<leader>", "w", "w"],
+      "commands": ["workbench.action.focusNextGroup"]
+    },
+    {
+      "before": ["<leader>", "b"],
+      "commands": ["workbench.action.openPreviousRecentlyUsedEditorInGroup"]
+    },
+    {
+      "before": ["<leader>", "z"],
+      "commands": ["workbench.action.terminal.toggleTerminal"]
+    },
+    {
+      "before": ["<leader>", "w"],
+      "commands": ["workbench.action.files.save"]
+    },
+    {
+      "before": ["<leader>", "q"],
+      "commands": ["workbench.action.closeActiveEditor"]
+    },
+    {
+      "before": ["<leader>", "x"],
+      "commands": ["workbench.files.action.focusFilesExplorer"]
+    },
+    {
+      "before": ["<leader>", "f"],
+      "commands": ["workbench.action.quickOpen"]
+    },
+    {
+      "before": ["<leader>", "e"],
+      "commands": ["workbench.files.action.focusFilesExplorer"]
+    }
+  ],
+  "vim.useSystemClipboard": true,
+
+  // Window
+  "window.zoomLevel": 0, // 0.2
+
+  // Workbench to mimic pablo theme
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#232731",
+    "statusBar.foreground": "#CFD6E4",
+    "statusBar.border": "#3a3a3a",
+    "statusBar.debuggingBackground": "#0000FF",
+    "statusBar.debuggingForeground": "#FFFFFF",
+    "statusBar.noFolderBackground": "#232731",
+    "sideBar.background": "#232731",
+    "sideBar.foreground": "#CFD6E4",
+    "sideBar.border": "#3a3a3a",
+    "list.hoverBackground": "#3a3a3a",
+    "list.inactiveSelectionBackground": "#3a3a3a",
+    "list.activeSelectionBackground": "#a9a9a980",
+    "list.activeSelectionForeground": "#FFFFFF"
+  },
+  "workbench.colorTheme": "vim-pablo-theme",
+  "workbench.iconTheme": "vs-seti",
+}

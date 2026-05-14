@@ -79,4 +79,36 @@ vim.o.scrolloff = 10
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
+-- Cursor
+vim.opt.guicursor = 'n-v-c:block,i:block'
+vim.o.termguicolors = false
+
+-- Editing
+vim.opt.wrap = false
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+vim.opt.copyindent = true
+vim.opt.preserveindent = true
+
+-- Wildmenu
+vim.opt.path:append('**')
+vim.opt.wildoptions:remove('pum')
+vim.opt.wildignore:append('**/node_modules/**')
+
+-- Netrw
+vim.g.netrw_liststyle = 0
+vim.g.netrw_banner = 0
+
+-- Colorscheme
+vim.cmd 'colorscheme og'
+vim.cmd [[
+  highlight Normal guibg=NONE ctermbg=NONE
+  highlight NormalNC guibg=NONE ctermbg=NONE
+  highlight EndOfBuffer guibg=NONE ctermbg=NONE
+]]
+
 -- vim: ts=2 sts=2 sw=2 et

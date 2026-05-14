@@ -6,7 +6,6 @@
 -- vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -50,6 +49,45 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.hl.on_yank()
   end,
 })
+
+-- Paste without losing register in visual mode
+vim.api.nvim_set_keymap('x', 'p', 'pgvy', { noremap = true, silent = true })
+
+-- Neovim commands
+vim.api.nvim_create_user_command('E', 'Explore', {})
+
+local keymap = vim.keymap.set
+local opts = { noremap = true, silent = true }
+
+-- Window toggle
+keymap('n', '<leader>ww', '<C-w>w', opts)
+
+-- Alternate buffer
+keymap('n', '<leader>-', '<C-^>', opts)
+
+-- Suspend to terminal
+keymap('n', '<leader>z', '<C-z>', opts)
+
+-- Save
+keymap('n', '<leader>w', '<cmd>w<CR>', opts)
+
+-- Quit
+keymap('n', '<leader>q', '<cmd>q<CR>', opts)
+
+-- Explorer
+keymap('n', '<leader>e', '<cmd>Ex<CR>', opts)
+
+-- Vertical split
+keymap('n', '<leader>vs', '<cmd>vs<CR>', opts)
+
+-- Save from insert mode
+keymap('i', '<C-s>', '<Esc><cmd>w<CR>', opts)
+
+-- Open file under cursor in vertical split
+keymap('n', 'gF', '<cmd>vertical wincmd f<CR>', opts)
+
+-- Diagnostic list (remapped from <leader>q)
+keymap('n', '<leader>dl', vim.diagnostic.setloclist, { desc = 'Open [D]iagnostic [L]ist' })
 
 -- vim: ts=2 sts=2 sw=2 et
 

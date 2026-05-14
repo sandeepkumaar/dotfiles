@@ -1,11 +1,33 @@
 vim.opt.guicursor = 'n-v-c:block,i:block'
-vim.g.termguicolors=true
-vim.cmd 'colorscheme pablo'
+vim.o.termguicolors = false
+
+vim.opt.splitright = true
+vim.opt.path:append('**')
+vim.opt.wildoptions:remove('pum')
+vim.opt.wildignore:append('**/node_modules/**')
+
+vim.opt.wrap = false
+
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+vim.opt.copyindent = true
+vim.opt.preserveindent = true
+--vim.cmd('filetype plugin indent on')
+--vim.opt.statusline:prepend('%{coc#status()}')
+
+vim.cmd 'colorscheme og'
 vim.cmd [[
   highlight Normal guibg=NONE ctermbg=NONE
   highlight NormalNC guibg=NONE ctermbg=NONE
   highlight EndOfBuffer guibg=NONE ctermbg=NONE
 ]]
+
+require('custom.coc')
+require('custom.ale')
 
 -- Set leader key (if not already set)
 vim.g.mapleader = ' '
@@ -15,39 +37,40 @@ local opts = { noremap = true, silent = true }
 
 --vim.g.netrw_fastbrowse = 0
 --vim.g.netrw_list_hide = '.*'
+vim.g.netrw_liststyle = 0
+vim.g.netrw_banner = 0
+
 
 -- Paste multiple times in visual mode
 vim.api.nvim_set_keymap('x', 'p', 'pgvy', opts)
 vim.api.nvim_create_user_command('E', 'Explore', {}) --infavour of vscode
 
---- VSCode-specific keymaps
-if vim.g.vscode then
-  -- Window switch: <leader>ww (focus next editor group)
-  keymap('n', '<leader>ww', '<cmd>lua require("vscode").action("workbench.action.focusNextGroup")<CR>', opts)
+--- Neovim keymaps (equivalent to .vimrc)
+-- Window switch: <leader>ww
+keymap('n', '<leader>ww', '<C-w>w', opts)
 
-  -- Alternate buffer: <leader>b (open previous editor)
-  keymap('n', '<leader>b', '<cmd>lua require("vscode").action("workbench.action.openPreviousRecentlyUsedEditorInGroup")<CR>', opts)
+-- Alternate buffer: <leader>-
+keymap('n', '<leader>-', '<C-^>', opts)
 
-  -- Open terminal: <leader>z
-  keymap('n', '<leader>z', '<cmd>lua require("vscode").action("workbench.action.terminal.toggleTerminal")<CR>', opts)
+-- Switch to terminal: <leader>z
+keymap('n', '<leader>z', '<C-z>', opts)
 
-  -- Save file: <leader>s
-  keymap('n', '<leader>w', '<cmd>lua require("vscode").action("workbench.action.files.save")<CR>', opts)
-  -- Save file from insert mode with Ctrl + s
-  keymap('i', '<C-s>', '<Esc><cmd>lua require("vscode").action("workbench.action.files.save")<CR>', opts)
+-- Write file: <leader>w
+keymap('n', '<leader>w', '<cmd>w<CR>', opts)
 
-  -- Close a file: <leader>q
-  keymap('n', '<leader>q', '<cmd>lua require("vscode").action("workbench.action.closeActiveEditor")<CR>', opts)
+-- Quit file: <leader>q
+keymap('n', '<leader>q', '<cmd>q<CR>', opts)
 
-  -- Open file explorer (netrw): <leader>x to close use cmd+b
-  keymap('n', '<leader>x', '<cmd>lua require("vscode").action("workbench.files.action.focusFilesExplorer")<CR>', opts)
-  -- Open Quick Open (Ctrl+P): <leader>f
-  keymap('n', '<leader>f', '<cmd>lua require("vscode").action("workbench.action.quickOpen")<CR>', opts)
+-- Explorer: <leader>e
+keymap('n', '<leader>e', '<cmd>Ex<CR>', opts)
 
-  -- Open command line with :Edit ready: <leader>e
-  keymap('n', '<leader>e', ':Edit ', { noremap = true, silent = false })
+-- Split: <leader>vs
+keymap('n', '<leader>vs', '<cmd>vs<CR>', opts)
 
-  -- use cmd+L to go to cascase, comeback with cmd+1 
-end
+-- Insert mode: Ctrl + s to save and return to normal mode
+keymap('i', '<C-s>', '<Esc><cmd>w<CR>', opts)
+
+-- File navigation
+keymap('n', 'gF', '<cmd>vertical wincmd f<CR>', opts)
 
 

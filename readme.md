@@ -26,7 +26,25 @@ setopt no_share_history
 ```
 
 ### dotfiles
-Clone dotfiles under the root directory. copy all files to Root  
+```bash
+git clone https://github.com/sandeepkumaar/dotfiles ~/dotfiles
+cd ~/dotfiles && bash setup.sh
+```
+
+After setup, create `~/.bash_local` for machine-specific config (office/personal) — this is not tracked in git:
+```bash
+# ~/.bash_local example
+export JAVA_HOME=...
+export NODE_EXTRA_CA_CERTS=...
+```
+
+Files managed by setup.sh:
+- `~/.tmux.conf`
+- `~/.bashrc`
+- `~/.zshrc`
+- `~/.vimrc`
+- `~/.config/nvim`
+
 
 ### VIM
 - mac has vim by default. if you need latest version - use brew to install latest

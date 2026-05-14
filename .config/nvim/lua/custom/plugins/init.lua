@@ -2,7 +2,7 @@
 --  I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
-return {
-  'pangloss/vim-javascript',
-  ft = { 'javascript', 'javascriptreact' },
-}
+--return {
+--  'pangloss/vim-javascript',
+--  ft = { 'javascript', 'javascriptreact' },
+--}

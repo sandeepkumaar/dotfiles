@@ -1,0 +1,12 @@
+{
+  "snippets.ultisnips.pythonPrompt": false,
+  "diagnostic.displayByAle": true,
+  // make tab to select the first occurence
+  "suggest.noselect": true,
+  // Disable autocompletion for js. trigger manually using ctrl-space
+  "[javascript]": {
+    "suggest.autoTrigger": "none",
+    "suggest.enableFloat": false,
+    "signature.enable": false
+  }
+}

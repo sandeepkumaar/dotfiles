@@ -1,22 +1,13 @@
-# .bashrc - common config tracked in git
-# Machine-specific config goes in ~/.bash_local (not tracked in git)
+# Executed by Non-Login Shell, loads everytime for a new terminal window session
+# Sourced by bash_profile and .zshrc
+# Keep common configs here
 
+
+# vi mode in terminal
 set -o vi
 
-# Add git branch if its present to PS1
-parse_git_branch() {
- git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
-}
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
-
+# Aliases
+# npm trash alias.
 alias rm='trash'
+alias vim='nvim'
 
-if [[ "$TERM_PROGRAM" == ghostty ]] || [[ "$TERM" == "xterm-ghostty" ]]; then
-  alias vim='nvim'
-fi
-
-# Load machine-specific config (work/personal) - not tracked in git
-[ -f ~/.bash_local ] && source ~/.bash_local

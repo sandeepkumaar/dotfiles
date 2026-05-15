@@ -1,5 +1,3 @@
--- NOTE: <c-space> is NOT mapped here — it is used as the tmux prefix.
--- Use <TAB> to trigger completion instead.
 return {
   'neoclide/coc.nvim',
   branch = 'release',
@@ -20,6 +18,7 @@ return {
     local opts = { silent = true, noremap = true, expr = true, replace_keycodes = false }
     keyset('i', '<TAB>', 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
     keyset('i', '<S-TAB>', [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
+    keyset('i', '<c-space>', 'coc#refresh()', opts)
     keyset('i', '<cr>', [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
 
     -- Snippets

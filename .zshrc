@@ -100,6 +100,9 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# My Config
+# .zshrc is loaded by Mac 
+# source bash_profile which sources bashrc.
 if [ -f ~/.bash_profile ]; then
   . ~/.bash_profile;
 fi

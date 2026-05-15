@@ -9,33 +9,14 @@ For installing without sudo
 $ mkdir ~/homebrew
 $ curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip-components 1 -C homebrew
 ```
-This will install all homebrew binaries under `~/homebrew` directory
-`HOMEBREW_PREFIX` is automatically set to `~/homebrew`
 
 ### Shell
 - Install oh-my-zsh: https://ohmyz.sh/
-- Modify the theme in `~/.zshrc` file
-- Load`bash_profile` on terminal startup
-```
-ZSH_THEME="gallifrey"
-
-if [ -f ~/.bash_profile ]; then
-  . ~/.bash_profile;
-fi
-setopt no_share_history
-```
 
 ### dotfiles
 ```bash
 git clone https://github.com/sandeepkumaar/dotfiles ~/dotfiles
 cd ~/dotfiles && bash setup.sh
-```
-
-After setup, create `~/.bash_local` for machine-specific config (office/personal) — this is not tracked in git:
-```bash
-# ~/.bash_local example
-export JAVA_HOME=...
-export NODE_EXTRA_CA_CERTS=...
 ```
 
 Files managed by setup.sh:
@@ -45,6 +26,20 @@ Files managed by setup.sh:
 - `~/.vimrc`
 - `~/.config/nvim`
 
+### Shell Configuration
+2 types of Shells 
+- Login Shell: Executed when User logs in physically or via ssh
+- Non-Login Shell: Executed when Terminal window opens
+
+Linux: Uses `bash_profile` for Login and `bashrc` for Non-login shells
+MacOs(Old): Always uses `bash_profile` Login and Non-login shells
+MasOs(New): Uses `.zhsrc` for both Login and Non-login shells
+
+Given these behaviours, we keep all common configs in `bashrc`   
+In Linux: bash_profile -> bashrc
+In MacOs: zshrc -> bash_profile -> bashrc  
+
+bash_profile will have User specific settings
 
 ### VIM
 - mac has vim by default. if you need latest version - use brew to install latest

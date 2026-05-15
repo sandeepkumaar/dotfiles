@@ -20,9 +20,24 @@ symlink() {
   echo "Linked $dest → $src"
 }
 
+copy() {
+  local src="$DOTFILES/$1"
+  local dest="$HOME/$2"
+
+  mkdir -p "$(dirname "$dest")"
+
+  if [ -e "$dest" ]; then
+    echo "Backing up $dest → $dest.backup"
+    mv "$dest" "$dest.backup"
+  fi
+
+  cp "$src" "$dest"
+  echo "Copied $src → $dest"
+}
+
 symlink ".tmux.conf"        ".tmux.conf"
 symlink ".bashrc"           ".bashrc"
-symlink ".zshrc"            ".zshrc"
+copy    ".zshrc"            ".zshrc"
 symlink ".vimrc"            ".vimrc"
 symlink ".config/nvim"      ".config/nvim"
 

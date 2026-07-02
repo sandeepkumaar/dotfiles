@@ -41,8 +41,7 @@ vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
--- Keep signcolumn on by default
-vim.o.signcolumn = 'yes'
+-- (signcolumn is configured in diagnostics.lua)
 
 -- Decrease update time
 vim.o.updatetime = 250
@@ -85,12 +84,6 @@ vim.o.termguicolors = false
 
 -- Editing
 vim.opt.wrap = false
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
-vim.opt.autoindent = true
-vim.opt.smartindent = true
 vim.opt.copyindent = true
 vim.opt.preserveindent = true
 
@@ -98,6 +91,9 @@ vim.opt.preserveindent = true
 vim.opt.path:append('**')
 vim.opt.wildoptions:remove('pum')
 vim.opt.wildignore:append('**/node_modules/**')
+
+-- Use ripgrep for :find (nvim 0.11+)
+vim.o.findfunc = "v:lua.require'findfunc'.find"
 
 -- Netrw
 vim.g.netrw_liststyle = 0
@@ -110,5 +106,8 @@ vim.cmd [[
   highlight NormalNC guibg=NONE ctermbg=NONE
   highlight EndOfBuffer guibg=NONE ctermbg=NONE
 ]]
+
+vim.opt.laststatus = 2     -- Always show the status line
+vim.opt.statusline = "%f"  -- %F shows full path; use %f for relative path
 
 -- vim: ts=2 sts=2 sw=2 et

@@ -44,10 +44,8 @@ require('lazy').setup({
 
   require 'plugins.treesitter',
   require 'plugins.coc',
-  require 'plugins.ale',
   require 'plugins.neoformat',
-  require 'plugins.comment',
-  require 'plugins.ai-pane',
+  require 'plugins.copy-reference',
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the

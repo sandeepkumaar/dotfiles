@@ -1,6 +1,6 @@
 {
-  "snippets.ultisnips.pythonPrompt": false,
-  "diagnostic.displayByAle": true,
+  "diagnostic.displayByAle": false,
+  "diagnostic.displayByVimDiagnostic": true,
   // make tab to select the first occurence
   "suggest.noselect": true,
   // Disable autocompletion for js. trigger manually using ctrl-space
@@ -8,5 +8,6 @@
     "suggest.autoTrigger": "none",
     "suggest.enableFloat": false,
     "signature.enable": false
-  }
+  },
+  "snippets.ultisnips.pythonPrompt": false
 }

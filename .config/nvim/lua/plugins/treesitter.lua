@@ -1,33 +1,4 @@
---return { -- Highlight, edit, and navigate code
---  'nvim-treesitter/nvim-treesitter',
---  build = ':TSUpdate',
---  main = 'nvim-treesitter',
---  opts = {
---    ensure_installed = {
---      'bash',
---      'c',
---      'diff',
---      'html',
---      'lua',
---      'luadoc',
---      'markdown',
---      'markdown_inline',
---      'query',
---      'vim',
---      'vimdoc',
---      'typescript',
---      'javascript',
---      'tsx',
---      'jsx',
---    },
---    auto_install = true,
---    highlight = {
---      enable = true,
---      additional_vim_regex_highlighting = true
---    }
---  },
---}
-return  { -- Highlight, edit, and navigate code
+return { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     lazy = false,
     build = ':TSUpdate',
@@ -53,8 +24,8 @@ return  { -- Highlight, edit, and navigate code
           -- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
           -- vim.wo.foldmethod = 'expr'
 
-          -- treesitter indentation disabled: using filetype indent scripts instead
-          -- (same behaviour as vim's filetype plugin indent on)
+          -- enables treesitter based indentation
+          vim.bo[buf].indentexpr = 'v:lua.vim.treesitter.indentexpr()'
         end,
       })
     end,

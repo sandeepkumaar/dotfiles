@@ -2,10 +2,12 @@ return { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     lazy = false,
     build = ':TSUpdate',
-    branch = 'main',
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
     config = function()
-      local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'javascript' }
+      -- lua, markdown, markdown_inline, query, vimdoc are bundled with Neovim 0.12+
+      -- and already auto-attached by core's own ftplugins, so we only manage
+      -- the parsers core doesn't ship or auto-attach.
+      local parsers = { 'bash', 'c', 'diff', 'html', 'luadoc', 'vim', 'javascript' }
       require('nvim-treesitter').install(parsers)
       vim.api.nvim_create_autocmd('FileType', {
         callback = function(args)
@@ -25,7 +27,11 @@ return { -- Highlight, edit, and navigate code
           -- vim.wo.foldmethod = 'expr'
 
           -- enables treesitter based indentation
-          vim.bo[buf].indentexpr = 'v:lua.vim.treesitter.indentexpr()'
+          -- (skip javascript: its treesitter indent queries are still experimental
+          -- and worse than the built-in vim-javascript indentexpr)
+          if filetype ~= 'javascript' then
+            vim.bo[buf].indentexpr = 'v:lua.vim.treesitter.indentexpr()'
+          end
         end,
       })
     end,

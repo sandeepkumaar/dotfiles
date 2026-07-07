@@ -95,6 +95,9 @@ vim.opt.wildignore:append('**/node_modules/**')
 -- Use ripgrep for :find (nvim 0.11+)
 vim.o.findfunc = "v:lua.require'findfunc'.find"
 
+-- Use ripgrep for :grep
+vim.o.grepprg = 'rg --vimgrep --smart-case'
+
 -- Netrw
 vim.g.netrw_liststyle = 0
 vim.g.netrw_banner = 0

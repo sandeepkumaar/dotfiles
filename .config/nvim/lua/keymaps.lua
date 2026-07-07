@@ -89,5 +89,10 @@ keymap('n', 'gF', '<cmd>vertical wincmd f<CR>', opts)
 -- Diagnostic list (remapped from <leader>q)
 keymap('n', '<leader>dl', vim.diagnostic.setloclist, { desc = 'Open [D]iagnostic [L]ist' })
 
+-- Grep word under cursor (CocList grep)
+keymap('n', 'gs', function()
+  vim.cmd('CocList grep ' .. vim.fn.expand('<cword>'))
+end, { desc = 'Grep word under cursor' })
+
 -- vim: ts=2 sts=2 sw=2 et
 

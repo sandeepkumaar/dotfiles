@@ -30,12 +30,6 @@ require('lazy').setup({
 
   --require 'kickstart.plugins.telescope',
 
-  --require 'kickstart.plugins.lspconfig',
-
-  --require 'kickstart.plugins.conform',
-
-  --require 'kickstart.plugins.blink-cmp',
-
   --require 'kickstart.plugins.tokyonight',
 
   --require 'kickstart.plugins.todo-comments',
@@ -47,7 +41,6 @@ require('lazy').setup({
   require 'plugins.completion',
   require 'plugins.conform',
   require 'plugins.copy-reference',
-  require 'plugins.render-markdown'
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the

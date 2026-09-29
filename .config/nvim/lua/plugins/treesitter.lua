@@ -27,11 +27,7 @@ return { -- Highlight, edit, and navigate code
           -- vim.wo.foldmethod = 'expr'
 
           -- enables treesitter based indentation
-          -- (skip javascript: its treesitter indent queries are still experimental
-          -- and worse than the built-in vim-javascript indentexpr)
-          if filetype ~= 'javascript' then
-            vim.bo[buf].indentexpr = 'v:lua.vim.treesitter.indentexpr()'
-          end
+          --vim.bo[buf].indentexpr = 'v:lua.vim.treesitter.indentexpr()'
         end,
       })
     end,

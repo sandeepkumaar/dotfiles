@@ -1,3 +1,6 @@
+-- [[ LSP Keymaps ]]
+--  Buffer-local keymaps set on LspAttach (see lua/plugins/lspconfig.lua)
+
 local M = {}
 
 function M.setup(bufnr)
@@ -32,9 +35,9 @@ function M.setup(bufnr)
 
   -- Yank diagnostic message
   local function copy_diagnostic_message()
-    local bufnr = vim.api.nvim_get_current_buf()
+    local cur_bufnr = vim.api.nvim_get_current_buf()
     local lnum = vim.api.nvim_win_get_cursor(0)[1]
-    local diags = vim.diagnostic.get(bufnr, { lnum = lnum - 1 })
+    local diags = vim.diagnostic.get(cur_bufnr, { lnum = lnum - 1 })
     if #diags == 0 then
       vim.notify('No diagnostic on this line', vim.log.levels.WARN)
       return
@@ -53,14 +56,18 @@ function M.setup(bufnr)
   -- Code actions & refactoring
   keymap('n', '<leader>a', vim.lsp.buf.code_action, opts('Code actions'))
   keymap('x', '<leader>a', vim.lsp.buf.code_action, opts('Code actions'))
-  keymap('n', '<leader>ac', vim.lsp.buf.code_action, opts('Code actions (cursor)'))
-  keymap('n', '<leader>as', vim.lsp.buf.code_action, opts('Code actions (source)'))
   keymap('n', '<leader>qf', function()
     vim.lsp.buf.code_action({ context = { only = { 'quickfix' } } })
   end, opts('Quick fix'))
-  keymap('n', '<leader>re', vim.lsp.buf.code_action, opts('Refactor'))
-  keymap('x', '<leader>r', vim.lsp.buf.code_action, opts('Refactor selection'))
-  keymap('n', '<leader>r', vim.lsp.buf.code_action, opts('Refactor selection'))
+  keymap('n', '<leader>am', function()
+    vim.lsp.buf.code_action({
+      context = { only = { 'quickfix' } },
+      filter = function(action)
+        return action.title:lower():find('missing properties', 1, true) ~= nil
+      end,
+      apply = true,
+    })
+  end, opts('Add missing properties'))
 
   -- Rename
   keymap('n', '<leader>rn', vim.lsp.buf.rename, opts('Rename symbol'))

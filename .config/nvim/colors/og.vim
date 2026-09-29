@@ -58,6 +58,8 @@ let s:p = {
       \ 'divider':   ['#a9a9a9', 248],
       \
       \ 'panel':     ['#303030', 236],
+      \ 'float':     ['#16161e', 233],
+      \ 'float_sel': ['#24242e', 235],
       \ 'line':      ['#3a3a3a', 237],
       \ 'column':    ['#4d4d4d', 239],
       \
@@ -161,13 +163,19 @@ call s:hi('ToolbarButton','bg',         'white_dim','bold')
 " =============================================================================
 " 7. EDITOR - completion popup
 " =============================================================================
-call s:hi('Pmenu',         'fg',   'panel',      '')
-call s:hi('PmenuSel',      'bg',   'white_dim',  '')
-call s:hi('PmenuMatch',    'pink', 'panel',      '')
-call s:hi('PmenuMatchSel', 'pink', 'white_dim',  '')
-call s:hi('PmenuSbar',     '',     '',           '')
-call s:hi('PmenuThumb',    '',     'fg',         '')
-call s:hi('WildMenu',      'bg',   'yellow',     '')
+call s:hi('Pmenu',         'fg',        'float',     '')
+call s:hi('PmenuSel',      'fg',        'float_sel', 'bold')
+call s:hi('PmenuKind',     'cyan_dark', '',          '')
+call s:hi('PmenuKindSel',  'cyan_dark', 'float_sel', 'bold')
+call s:hi('PmenuExtra',    'grey',      '',          '')
+call s:hi('PmenuExtraSel', 'grey',      'float_sel', 'bold')
+call s:hi('PmenuMatch',    'pink',      '',          '')
+call s:hi('PmenuMatchSel', 'pink',      'float_sel', 'bold')
+call s:hi('PmenuSbar',     '',          '',          '')
+call s:hi('PmenuThumb',    '',          'grey_dim',  '')
+call s:hi('WildMenu',      'bg',        'yellow',    '')
+call s:hi('NormalFloat',   'fg',        'panel',     '')
+call s:hi('FloatBorder',   'grey_dim',  'panel',     '')
 
 " =============================================================================
 " 8. EDITOR - search, selection, matching
@@ -301,6 +309,8 @@ hi! link CursorLineSign    CursorLine
 hi! link LineNrAbove       LineNr
 hi! link LineNrBelow       LineNr
 hi! link MessageWindow     Pmenu
+hi! link BlinkCmpDoc       Pmenu
+hi! link BlinkCmpDocBorder Pmenu
 hi! link PopupNotification Todo
 hi! link StatusLineTerm    StatusLine
 hi! link StatusLineTermNC  StatusLineNC

@@ -18,10 +18,6 @@ return {
           go = { 'gofmt' },
           rust = { 'rustfmt' },
         },
-        format_on_save = {
-          timeout_ms = 500,
-          lsp_fallback = true,
-        },
       })
 
       vim.api.nvim_create_user_command('Format', function(opts)
@@ -31,6 +27,8 @@ return {
           conform.format()
         end
       end, { range = true, desc = 'Format buffer or selection' })
+
+      vim.keymap.set('x', '=', function() conform.format() end, { desc = 'Format selection' })
     end,
   },
 }

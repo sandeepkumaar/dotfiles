@@ -10,10 +10,11 @@ function M.find(cmdarg, _)
   end
 
   local cmd = {
-    'rg', '--files', '--hidden', '--no-ignore-parent',
-    '-g', '!.git', '-g', pattern,
+    'fd', '--type', 'f', '--hidden',
+    '--exclude', '.git', '--glob', pattern,
   }
   if dir ~= '.' then
+    table.insert(cmd, '--search-path')
     table.insert(cmd, dir)
   end
 

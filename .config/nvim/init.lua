@@ -19,6 +19,9 @@ require 'options'
 -- [[ Basic Keymaps ]]
 require 'keymaps'
 
+-- [[ Grep ]]
+require 'grep'
+
 -- [[ Native diagnostic config (signs, echo-on-cursor, no float) ]]
 require 'diagnostics'
 

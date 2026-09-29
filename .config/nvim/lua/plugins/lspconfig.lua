@@ -18,16 +18,25 @@ return {
         client.server_capabilities.semanticTokensProvider = nil
       end
 
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
+
       vim.lsp.config('ts_ls', {
         cmd = { 'typescript-language-server', '--stdio' },
         root_markers = { 'tsconfig.json', 'jsconfig.json', '.git' },
         on_attach = on_attach,
+        capabilities = capabilities,
+        settings = {
+          completions = {
+            completeFunctionCalls = true,
+          },
+        },
       })
 
       vim.lsp.config('jsonls', {
         cmd = { 'vscode-json-languageserver', '--stdio' },
         root_markers = { '.git' },
         on_attach = on_attach,
+        capabilities = capabilities,
       })
 
       vim.lsp.enable({ 'ts_ls', 'jsonls' })

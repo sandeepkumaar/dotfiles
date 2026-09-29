@@ -1,63 +1,14 @@
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
-
--- Clear highlights on search when pressing <Esc> in normal mode
---  See `:help hlsearch`
--- vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
--- Diagnostic keymaps
-
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
---
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-
--- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
--- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
--- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
--- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
--- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
--- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
-
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
-
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.hl.on_yank()`
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.hl.on_yank()
-  end,
-})
-
--- Paste without losing register in visual mode
-vim.api.nvim_set_keymap('x', 'p', 'pgvy', { noremap = true, silent = true })
-
--- Neovim commands
-vim.api.nvim_create_user_command('E', 'Explore', {})
-
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
+
+--  Use CTRL+<hjkl> to switch between windows
+keymap('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+keymap('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+keymap('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+keymap('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+-- Paste without losing register in visual mode
+keymap('x', 'p', 'pgvy', opts)
 
 -- Window toggle
 keymap('n', '<leader>ww', '<C-w>w', opts)
@@ -66,7 +17,7 @@ keymap('n', '<leader>ww', '<C-w>w', opts)
 keymap('n', '<leader>-', '<C-^>', opts)
 
 -- Suspend to terminal
-keymap('n', '<leader>z', '<C-z>', opts)
+--keymap('n', '<leader>z', '<C-z>', opts)
 
 -- Save
 keymap('n', '<leader>w', '<cmd>w<CR>', opts)
@@ -75,52 +26,12 @@ keymap('n', '<leader>w', '<cmd>w<CR>', opts)
 keymap('n', '<leader>q', '<cmd>q<CR>', opts)
 
 -- Explorer
+vim.api.nvim_create_user_command('E', 'Explore', {})
 keymap('n', '<leader>e', '<cmd>Ex<CR>', opts)
 
 -- Vertical split
-keymap('n', '<leader>vs', '<cmd>vs<CR>', opts)
+--keymap('n', '<leader>vs', '<cmd>vs<CR>', opts)
 
 -- Save from insert mode
-keymap('i', '<C-s>', '<Esc><cmd>w<CR>', opts)
-
--- Open file under cursor in vertical split
-keymap('n', 'gF', '<cmd>vertical wincmd f<CR>', opts)
-
--- Grep word under cursor
-keymap('n', 'gs', function()
-  local word = vim.fn.expand('<cword>')
-  vim.cmd('silent grep! ' .. vim.fn.shellescape(word))
-  vim.cmd('copen')
-end, { desc = 'Grep word under cursor' })
-
--- :Grep command (uses ripgrep via grepprg setting)
-vim.api.nvim_create_user_command('Grep', function(opts)
-  if #opts.fargs == 0 then
-    vim.cmd('copen')
-  else
-    vim.cmd('silent grep! ' .. table.concat(opts.fargs, ' '))
-    vim.cmd('copen')
-  end
-end, { nargs = '*', complete = 'file', desc = 'Grep via ripgrep' })
-
--- Make :grep redirect to :Grep when typed at the start of the command line
-vim.cmd([[cnoreabbrev <expr> grep (getcmdtype() ==# ':' && getcmdline() =~# '^grep') ? 'Grep' : 'grep']])
-
--- Diagnostics list in quickfix
-keymap('n', '<space>a', function()
-  vim.diagnostic.setqflist()
-  vim.cmd('copen')
-end, { desc = 'Diagnostics list' })
-
--- Document outline/symbols (navigate with LSP)
-keymap('n', '<space>o', function()
-  local params = vim.lsp.util.make_position_params()
-  vim.lsp.buf_request(0, 'textDocument/documentSymbol', params, function(err, result, ctx, config)
-    if err or not result then return end
-    -- Open a simple symbol browser or show in preview
-    vim.notify('Use gd/gi/gr for navigation, or K for info', vim.log.levels.INFO)
-  end)
-end, { desc = 'Document symbols' })
-
--- vim: ts=2 sts=2 sw=2 et
+--keymap('i', '<C-s>', '<Esc><cmd>w<CR>', opts)
 

@@ -14,7 +14,7 @@ vim.diagnostic.config({
   },
   underline = false,
   virtual_text = false,
-  float = false,
+  float = { border = 'solid' }, -- blank padding around the T float
   update_in_insert = false,
   severity_sort = true,
 })

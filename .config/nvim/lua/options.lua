@@ -1,117 +1,62 @@
--- [[ Setting options ]]
--- See `:help vim.o`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
-
--- Make line numbers default
 vim.o.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
--- vim.o.relativenumber = true
-
--- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
-
--- Don't show the mode, since it's already in the status line
 vim.o.showmode = false
 
--- Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
+-- Tabs & Indents 
+vim.o.expandtab = true -- use spaces for tabs
+vim.o.tabstop = 2 -- use 2 spaces for a tab
+vim.o.softtabstop = 2 -- use 2 spaces for a tab in insert mode
+vim.o.shiftwidth = 2 -- use 2 spaces when >> or << 
+vim.o.smartindent = true -- indent to a newline based on code
+vim.opt.copyindent = true -- preserve indent when copied from a diff place
+vim.opt.preserveindent = true -- preserve indent on newline
+
+vim.o.wrap = true -- wrap long lines and follow indents
+vim.o.breakindent = true -- wrapped lines follow the indentation instead to start from margin
+vim.o.linebreak = true -- no word break
+
+
+-- Settings
 vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
 end)
-
--- Enable break indent
-vim.o.breakindent = true
-
--- Indentation (mirrors ~/.vimrc settings)
-vim.o.autoindent = true
-vim.o.smartindent = true
-vim.o.tabstop = 2
-vim.o.softtabstop = 2
-vim.o.shiftwidth = 2
-vim.o.expandtab = true
-
--- Save undo history
-vim.o.undofile = true
-
--- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
--- (signcolumn is configured in diagnostics.lua)
-
--- Decrease update time
-vim.o.updatetime = 250
-
--- Decrease mapped sequence wait time
-vim.o.timeoutlen = 300
-
--- Configure how new splits should be opened
+vim.o.undofile = true -- persist undo after file close
+vim.o.updatetime = 250 -- time to trigger completions, errors 
+vim.o.timeoutlen = 300 -- key combos wait time
+vim.o.confirm = true -- ask for confirmation in the event of any failures
 vim.o.splitright = true
 vim.o.splitbelow = true
 
--- Sets how neovim will display certain whitespace characters in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
---
---  Notice listchars is set using `vim.opt` instead of `vim.o`.
---  It is very similar to `vim.o` but offers an interface for conveniently interacting with tables.
---   See `:help lua-options`
---   and `:help lua-options-guide`
---vim.o.list = true
--- vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
--- Preview substitutions live, as you type!
-vim.o.inccommand = 'split'
-
--- Show which line your cursor is on
--- vim.o.cursorline = true
-
--- Minimal number of screen lines to keep above and below the cursor.
-vim.o.scrolloff = 10
-
--- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
--- instead raise a dialog asking if you wish to save the current file(s)
--- See `:help 'confirm'`
-vim.o.confirm = true
+-- Search
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.o.inccommand = 'split' -- highlight text on search & replace
+vim.o.findfunc = "v:lua.require'findfunc'.find" -- use fd for :find
+vim.o.grepprg = 'rg --vimgrep --smart-case' -- use ripgrep for :grep
 
 -- Cursor
 vim.opt.guicursor = 'n-v-c:block,i:block'
-vim.o.termguicolors = true
-
--- Editing
-vim.opt.wrap = false
-vim.opt.copyindent = true
-vim.opt.preserveindent = true
+vim.o.scrolloff = 10 -- Minimal number of screen lines to keep above and below the cursor.
 
 -- Wildmenu
 vim.opt.path:append('**')
-vim.opt.wildoptions:remove('pum')
+vim.opt.wildoptions:remove('pum') -- wildmenu shows horizontally
 vim.opt.wildignore:append('**/node_modules/**')
 
--- Use ripgrep for :find (nvim 0.11+)
-vim.o.findfunc = "v:lua.require'findfunc'.find"
-
--- Use ripgrep for :grep
-vim.o.grepprg = 'rg --vimgrep --smart-case'
 
 -- Netrw
 vim.g.netrw_liststyle = 0
 vim.g.netrw_banner = 0
 
 -- Colorscheme
+vim.o.termguicolors = true
 vim.cmd 'colorscheme og'
 vim.cmd [[
   highlight Normal guibg=NONE ctermbg=NONE
   highlight NormalNC guibg=NONE ctermbg=NONE
   highlight EndOfBuffer guibg=NONE ctermbg=NONE
-]]
+]] -- takes terminal's background instead of vim's dark bg
 
-vim.opt.laststatus = 2
--- Show relative path from cwd
-vim.opt.statusline = "%{fnamemodify(expand('%'), ':~:.')}"
-
--- vim: ts=2 sts=2 sw=2 et
+-- StatusLine: At the bottom we have 2 sections. CommandLine, StatusLine. Option 2 - provides a dedicated statusline on single, splits
+vim.opt.laststatus = 2 -- default. we 
+vim.opt.statusline = "%{fnamemodify(expand('%'), ':~:.')}" -- relative path from working directory

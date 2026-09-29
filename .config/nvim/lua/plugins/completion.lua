@@ -1,149 +1,109 @@
+local lsp_aliases = {
+	["ts_ls"] = "TSC",
+	["vtsls"] = "TSC",
+	["lua_ls"] = "LUA",
+	["gopls"] = "GO",
+	["pyright"] = "PY",
+	["rust_analyzer"] = "RUST",
+}
+
+-- coc's default suggest.completionItemKindLabels
+local coc_kinds = {
+	Text = "v",
+	Method = "f",
+	Function = "f",
+	Constructor = "f",
+	Field = "m",
+	Variable = "v",
+	Class = "C",
+	Interface = "I",
+	Module = "M",
+	Property = "m",
+	Unit = "U",
+	Value = "v",
+	Enum = "E",
+	Keyword = "k",
+	Snippet = "S",
+	Color = "v",
+	File = "F",
+	Reference = "r",
+	Folder = "F",
+	EnumMember = "m",
+	Constant = "v",
+	Struct = "S",
+	Event = "E",
+	Operator = "O",
+	TypeParameter = "T",
+}
+
+-- coc-style source shortcuts
+local source_aliases = {
+	buffer = "B",
+	path = "F",
+	snippets = "S",
+}
+
 return {
-  {
-    'hrsh7th/nvim-cmp',
-    dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-    },
-    config = function()
-      local cmp = require('cmp')
+	{
+		"saghen/blink.cmp",
+		version = "1.*",
+		opts = {
+			keymap = {
+				preset = "super-tab",
+				-- Override Tab: Cycles the menu, expands snippets, completes after text, or indents
+				["<Tab>"] = {
+					"select_next",
+					"snippet_forward",
+					function(cmp)
+						local cursor = vim.api.nvim_win_get_cursor(0)
+						local before_cursor = vim.api.nvim_get_current_line():sub(1, cursor[2])
+						if before_cursor:match("%S$") then
+							return cmp.show()
+						end
+					end,
+					"fallback",
+				},
+			},
+			completion = {
+				list = {
+					selection = { preselect = false, auto_insert = true },
+				},
+				menu = {
+					auto_show = false, -- Manual trigger only (per your preference)
+					border = "padded",
+					draw = {
+						padding = 0,
+						gap = 1,
+						columns = { { "label" }, { "kind" }, { "shortcut" } },
+						components = {
+							label = { width = { fill = true, max = 60 } },
+							kind = {
+								text = function(ctx)
+									return coc_kinds[ctx.kind] or ""
+								end,
+							},
+							shortcut = {
+								text = function(ctx)
+									local name = ctx.item.client_name
+									local alias = name and (lsp_aliases[name] or name:upper())
+										or source_aliases[ctx.item.source_id]
+										or ctx.source_name:upper()
+									return "[" .. alias .. "]"
+								end,
+								highlight = "Comment",
+							},
+						},
+					},
+				},
 
-      -- Dim the [TS], [BUF] etc (after colorscheme loads)
-      vim.api.nvim_create_autocmd('ColorScheme', {
-        callback = function()
-          vim.api.nvim_set_hl(0, 'CmpItemMenu', { fg = '#808080' })
-        end,
-      })
-      vim.schedule(function()
-        vim.api.nvim_set_hl(0, 'CmpItemMenu', { fg = '#808080' })
-      end)
-
-      local has_words_before = function()
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
-      end
-
-      cmp.setup({
-        formatting = {
-          format = function(entry, vim_item)
-            -- Show kind as single letter (like coc)
-            local kind_icons = {
-              Text = 'T',
-              Method = 'f',
-              Function = 'f',
-              Constructor = 'C',
-              Field = 'F',
-              Variable = 'v',
-              Class = 'c',
-              Interface = 'i',
-              Module = 'M',
-              Property = 'P',
-              Unit = 'U',
-              Value = 'V',
-              Enum = 'E',
-              Keyword = 'K',
-              Snippet = 'S',
-              Color = 'C',
-              File = 'F',
-              Reference = 'R',
-              Folder = 'D',
-              EnumMember = 'E',
-              Constant = 'C',
-              Struct = 'S',
-              Event = 'E',
-              Operator = 'O',
-              TypeParameter = 'T',
-            }
-
-            vim_item.kind = kind_icons[vim_item.kind] or vim_item.kind
-
-            -- Show language (like coc: [TS], [JS], [BUF], [PATH])
-            local source_menu = {
-              nvim_lsp = (function()
-                local ft = vim.bo.filetype
-                local ft_map = {
-                  typescript = 'TS',
-                  typescriptreact = 'TSX',
-                  javascript = 'JS',
-                  javascriptreact = 'JSX',
-                  json = 'JSON',
-                  lua = 'LUA',
-                  python = 'PY',
-                  go = 'GO',
-                  rust = 'RS',
-                  yaml = 'YAML',
-                  html = 'HTML',
-                  css = 'CSS',
-                }
-                return '[' .. (ft_map[ft] or ft:upper()) .. ']'
-              end)(),
-              buffer = '[BUF]',
-              path = '[PATH]',
-              nvim_lua = '[LUA]',
-            }
-            vim_item.menu = source_menu[entry.source.name]
-
-            return vim_item
-          end,
-        },
-        window = {
-          completion = cmp.config.window.bordered({
-            border = 'none',
-            winhighlight = 'Normal:NormalFloat,FloatBorder:FloatBorder',
-          }),
-          documentation = cmp.config.window.bordered({
-            border = 'none',
-            winhighlight = 'Normal:NormalFloat,FloatBorder:FloatBorder',
-          }),
-        },
-        performance = {
-          max_view_entries = 10,
-        },
-        mapping = cmp.mapping.preset.insert({
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-e>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp.mapping.confirm({ select = false }),
-          ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif has_words_before() then
-              cmp.complete()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-        }),
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-          { name = 'buffer' },
-          { name = 'path' },
-        }),
-        completion = {
-          autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged },
-        },
-      })
-
-      -- JavaScript/TypeScript: disable auto-trigger (suggest.autoTrigger: "none")
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
-        callback = function()
-          cmp.setup.buffer({
-            completion = {
-              autocomplete = {},  -- Manual trigger via Ctrl-Space only
-            },
-          })
-        end,
-      })
-    end,
-  },
+				documentation = {
+					window = { border = "padded" },
+				},
+			},
+			fuzzy = { implementation = "lua" },
+			cmdline = {
+				enabled = false,
+			},
+		},
+	},
 }

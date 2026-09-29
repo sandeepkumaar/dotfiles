@@ -77,8 +77,8 @@ set wildmode=full
 set wildignore+=**/node_modules/**
 
 " netrw config
-let g:netrw_liststyle= 0 
-let g:netrw_banner = 0
+"let g:netrw_liststyle= 1 
+"let g:netrw_banner = 0
 ":E  open current directory 
 "d, D delete and create directory 
 "R rename

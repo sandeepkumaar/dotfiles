@@ -86,13 +86,41 @@ keymap('i', '<C-s>', '<Esc><cmd>w<CR>', opts)
 -- Open file under cursor in vertical split
 keymap('n', 'gF', '<cmd>vertical wincmd f<CR>', opts)
 
--- Diagnostic list (remapped from <leader>q)
-keymap('n', '<leader>dl', vim.diagnostic.setloclist, { desc = 'Open [D]iagnostic [L]ist' })
-
--- Grep word under cursor (CocList grep)
+-- Grep word under cursor
 keymap('n', 'gs', function()
-  vim.cmd('CocList grep ' .. vim.fn.expand('<cword>'))
+  local word = vim.fn.expand('<cword>')
+  vim.cmd('silent grep! ' .. vim.fn.shellescape(word))
+  vim.cmd('copen')
 end, { desc = 'Grep word under cursor' })
+
+-- :Grep command (uses ripgrep via grepprg setting)
+vim.api.nvim_create_user_command('Grep', function(opts)
+  if #opts.fargs == 0 then
+    vim.cmd('copen')
+  else
+    vim.cmd('silent grep! ' .. table.concat(opts.fargs, ' '))
+    vim.cmd('copen')
+  end
+end, { nargs = '*', complete = 'file', desc = 'Grep via ripgrep' })
+
+-- Make :grep redirect to :Grep when typed at the start of the command line
+vim.cmd([[cnoreabbrev <expr> grep (getcmdtype() ==# ':' && getcmdline() =~# '^grep') ? 'Grep' : 'grep']])
+
+-- Diagnostics list in quickfix
+keymap('n', '<space>a', function()
+  vim.diagnostic.setqflist()
+  vim.cmd('copen')
+end, { desc = 'Diagnostics list' })
+
+-- Document outline/symbols (navigate with LSP)
+keymap('n', '<space>o', function()
+  local params = vim.lsp.util.make_position_params()
+  vim.lsp.buf_request(0, 'textDocument/documentSymbol', params, function(err, result, ctx, config)
+    if err or not result then return end
+    -- Open a simple symbol browser or show in preview
+    vim.notify('Use gd/gi/gr for navigation, or K for info', vim.log.levels.INFO)
+  end)
+end, { desc = 'Document symbols' })
 
 -- vim: ts=2 sts=2 sw=2 et
 

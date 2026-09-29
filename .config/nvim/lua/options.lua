@@ -80,7 +80,7 @@ vim.o.confirm = true
 
 -- Cursor
 vim.opt.guicursor = 'n-v-c:block,i:block'
-vim.o.termguicolors = false
+vim.o.termguicolors = true
 
 -- Editing
 vim.opt.wrap = false
@@ -110,7 +110,8 @@ vim.cmd [[
   highlight EndOfBuffer guibg=NONE ctermbg=NONE
 ]]
 
-vim.opt.laststatus = 2     -- Always show the status line
-vim.opt.statusline = "%f"  -- %F shows full path; use %f for relative path
+vim.opt.laststatus = 2
+-- Show relative path from cwd
+vim.opt.statusline = "%{fnamemodify(expand('%'), ':~:.')}"
 
 -- vim: ts=2 sts=2 sw=2 et

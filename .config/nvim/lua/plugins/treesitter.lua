@@ -7,7 +7,7 @@ return { -- Highlight, edit, and navigate code
       -- lua, markdown, markdown_inline, query, vimdoc are bundled with Neovim 0.12+
       -- and already auto-attached by core's own ftplugins, so we only manage
       -- the parsers core doesn't ship or auto-attach.
-      local parsers = { 'bash', 'c', 'diff', 'html', 'luadoc', 'vim', 'javascript' }
+      local parsers = { 'bash', 'c', 'diff', 'html', 'luadoc', 'vim', 'javascript', 'typescript' }
       require('nvim-treesitter').install(parsers)
       vim.api.nvim_create_autocmd('FileType', {
         callback = function(args)

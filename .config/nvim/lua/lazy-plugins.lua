@@ -43,9 +43,11 @@ require('lazy').setup({
   --require 'kickstart.plugins.mini',
 
   require 'plugins.treesitter',
-  require 'plugins.coc',
-  require 'plugins.neoformat',
+  require 'plugins.lspconfig',
+  require 'plugins.completion',
+  require 'plugins.conform',
   require 'plugins.copy-reference',
+  require 'plugins.render-markdown'
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
